@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#f39c12</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="appBackground">#f39c12</color>
+    <!-- Flat UI Colors Palette -->
+    <color name="orange">#f39c12</color>
+    <color name="pumpkin">#D35400</color>
+    <color name="carrot">#e67e22</color>
+    <color name="sunflower">#F1C40F</color>
+    <color name="alizarin">#e74c3c</color>
+    <color name="pomegranate">#C0392B</color>
+    <color name="clouds">#ECF0F1</color>
+    <color name="silver">#bdc3c7</color>
+    <color name="nephritis">#27ae60</color>
+    <color name="peterriver">#3498db</color>
+    <color name="belizehole">#2980b9</color>
+    <color name="concrete">#95a5a6</color>
+    <color name="asbestos">#7f8c8d</color>
+    <color name="wetasphalt">#34495e</color>
+    <color name="midnightblue">#2c3e50</color>
+    <color name="purple">#9b59b6</color>
+    <color name="wisteria">#8e44ad</color>
+    <color name="greensea">#16a085</color>
+    <color name="turquoise">#1abc9c</color>
+
+
+</resources>

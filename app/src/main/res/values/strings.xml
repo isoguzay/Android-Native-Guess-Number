@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">GuessNumber</string>
+    <string name="app_welcome">Guess a Number</string>
+    <string name="question"> ? </string>
+    <string name="game_info">Guess a Number </string>
+    <string name="result">Result : </string>
+    <string name="buttonGuess">Try It</string>
+    <string name="buttonPlay">Lets Play</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
