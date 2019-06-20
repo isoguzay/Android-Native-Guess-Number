@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity"
-    android:background="@color/appBackground">
+    android:background="@color/appBackground"
+    android:theme="@style/Theme.Design.NoActionBar">
 
     <TextView
         android:id="@+id/textView_welcome"
