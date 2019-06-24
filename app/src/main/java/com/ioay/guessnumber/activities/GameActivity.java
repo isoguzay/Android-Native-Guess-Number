@@ -17,32 +17,35 @@ import com.ioay.guessnumber.fragments.SettingsFragment;
 
 public class GameActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private TextView mTextMessage;
+    Fragment fragment = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        loadFragment(new HomeFragment());
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(this);
 
-        loadFragment(new HomeFragment());
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Fragment fragment = null;
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
             case R.id.navigation_home:
                 fragment = new HomeFragment();
-                return true;
+                break;
             case R.id.navigation_settings:
                 fragment = new SettingsFragment();
-                return true;
+                break;
             case R.id.navigation_profile:
                 fragment = new ProfileFragment();
-                return true;
+                break;
         }
         return loadFragment(fragment);
     }
