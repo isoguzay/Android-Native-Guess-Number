@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ioay.guessnumber.R;
+import com.ioay.guessnumber.model.GuessNumber;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonStart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

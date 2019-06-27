@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ioay.guessnumber.R;
+import com.ioay.guessnumber.activities.GameActivity;
 import com.ioay.guessnumber.activities.MainActivity;
+import com.ioay.guessnumber.model.GuessNumber;
 
 import java.util.Random;
 
@@ -25,21 +27,18 @@ public class HomeFragment extends Fragment {
     private ImageView arrowUp, arrowDown, trophy;
     private EditText editTextGuess;
     private TextView textViewMessage;
-    private int number;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            number = Integer.valueOf(getArguments().getString("Number"));
-            Log.e("Home Fragment ", String.valueOf(number));
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+        final GuessNumber guessNumber = new GuessNumber();
+
+        if (getArguments() != null) {
+            guessNumber.setGuessNumber(Integer.valueOf(getArguments().getString("Number")));
+            Log.e("Home Fragment ", String.valueOf(guessNumber));
+        }
 
         buttonTry = v.findViewById(R.id.button_try);
         arrowUp = v.findViewById(R.id.arrowup);
@@ -47,22 +46,22 @@ public class HomeFragment extends Fragment {
         trophy = v.findViewById(R.id.trophy);
         textViewMessage = v.findViewById(R.id.textView_message);
         editTextGuess = v.findViewById(R.id.editText_guessInput);
-        Log.e("Home Fragment View ", String.valueOf(number));
 
         buttonTry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 int guess = Integer.valueOf(editTextGuess.getText().toString());
 
-                if (guess > number) {
+                if (guess < guessNumber.getGuessNumber()) {
                     arrowDown.setVisibility(View.VISIBLE);
                     arrowUp.setVisibility(View.INVISIBLE);
                 }
-                if (guess < number) {
+                if (guess > guessNumber.getGuessNumber()) {
                     arrowDown.setVisibility(View.INVISIBLE);
                     arrowUp.setVisibility(View.VISIBLE);
                 }
-                if (guess == number) {
+                if (guess == guessNumber.getGuessNumber()) {
                     arrowDown.setVisibility(View.INVISIBLE);
                     arrowUp.setVisibility(View.INVISIBLE);
                     trophy.setVisibility(View.VISIBLE);
@@ -72,6 +71,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
         return v;
     }
 
