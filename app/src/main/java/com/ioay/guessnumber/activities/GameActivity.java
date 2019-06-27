@@ -1,5 +1,6 @@
 package com.ioay.guessnumber.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -14,16 +15,15 @@ import com.ioay.guessnumber.fragments.ProfileFragment;
 import com.ioay.guessnumber.fragments.SettingsFragment;
 import com.ioay.guessnumber.model.GuessNumber;
 
+import java.io.Serializable;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
     private TextView mTextMessage;
-    private String range;
-    private int temp;
     Fragment fragment = null;
-    GuessNumber guessNumber = new GuessNumber();
+    String value;
     Bundle bundle = new Bundle();
-    Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,38 +33,24 @@ public class GameActivity extends AppCompatActivity implements BottomNavigationV
         mTextMessage = findViewById(R.id.textView_message);
         navView.setOnNavigationItemSelectedListener(this);
 
-        if (savedInstanceState == null) {
-            range = getIntent().getStringExtra("Range");
+        Bundle getDataBundle = getIntent().getExtras();
+        if (getDataBundle != null) {
+            value = getDataBundle.getString("data");
         }
 
-        guessNumber.setNumberRange(range);
+        GuessNumber gNumber = (GuessNumber) getIntent().getSerializableExtra("numberObject");
 
-        switch (guessNumber.getNumberRange()) {
-            case "0..9":
-                temp = random.nextInt(9);
-                guessNumber.setGuessNumber(temp);
-                break;
-            case "0..25":
-                temp = random.nextInt(25);
-                guessNumber.setGuessNumber(temp);
-                break;
-            case "0..50":
-                temp = random.nextInt(50);
-                guessNumber.setGuessNumber(temp);
-                break;
-            case "0..100":
-                temp = random.nextInt(100);
-                guessNumber.setGuessNumber(temp);
-                break;
-            default:
-                temp = random.nextInt(5);
-                guessNumber.setGuessNumber(temp);
+        if (value != null) {
+            Log.e("Game ... ", value);
         }
+            Log.e("object ", gNumber.toString());
 
-        Log.e("Game Activity Number  ", String.valueOf(guessNumber.getGuessNumber()));
-        Log.e("Range ", guessNumber.getNumberRange());
+        Bundle bundle = new Bundle();
+        bundle.putInt("data",Integer.valueOf(value));
+        HomeFragment homeFragment = new HomeFragment();
+        homeFragment.setArguments(bundle);
+        loadFragment(homeFragment);
 
-        loadFragment(new HomeFragment());
     }
 
     @Override
@@ -73,7 +59,7 @@ public class GameActivity extends AppCompatActivity implements BottomNavigationV
         switch (menuItem.getItemId()) {
             case R.id.navigation_home:
                 fragment = new HomeFragment();
-                bundle.putString("Number", String.valueOf(guessNumber.getGuessNumber()));
+                bundle.putInt("data",Integer.valueOf(value));
                 fragment.setArguments(bundle);
                 break;
             case R.id.navigation_settings:

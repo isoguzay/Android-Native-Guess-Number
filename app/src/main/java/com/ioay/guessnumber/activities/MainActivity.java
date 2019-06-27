@@ -12,16 +12,20 @@ import android.widget.Button;
 import com.ioay.guessnumber.R;
 import com.ioay.guessnumber.model.GuessNumber;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonStart;
+    GuessNumber guessNumber = new GuessNumber();
+    private String range;
+    private int temp;
+    Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        buttonStart = findViewById(R.id.button_start);
-
         buttonStart = findViewById(R.id.button_start);
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
@@ -33,8 +37,35 @@ public class MainActivity extends AppCompatActivity {
                 builder.setItems(range, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
+                        guessNumber.setNumberRange(range[i]);
+
+                        switch (guessNumber.getNumberRange()) {
+                            case "0..9":
+                                temp = random.nextInt(9);
+                                guessNumber.setGuessNumber(temp);
+                                break;
+                            case "0..25":
+                                temp = random.nextInt(25);
+                                guessNumber.setGuessNumber(temp);
+                                break;
+                            case "0..50":
+                                temp = random.nextInt(50);
+                                guessNumber.setGuessNumber(temp);
+                                break;
+                            case "0..100":
+                                temp = random.nextInt(100);
+                                guessNumber.setGuessNumber(temp);
+                                break;
+                            default:
+                                temp = random.nextInt(5);
+                                guessNumber.setGuessNumber(temp);
+                        }
+
                         Intent intent = new Intent(MainActivity.this, GameActivity.class);
-                        intent.putExtra("Range", range[i]);
+                        intent.putExtra("data", String.valueOf(guessNumber.getGuessNumber()));
+                        intent.putExtra("numberObject", guessNumber);
+
+                        Log.e("Main ac Number", String.valueOf(guessNumber.getGuessNumber()));
                         startActivity(intent);
                         finish();
                     }

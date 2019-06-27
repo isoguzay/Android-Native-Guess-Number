@@ -1,6 +1,8 @@
 package com.ioay.guessnumber.model;
 
-public class GuessNumber {
+import java.io.Serializable;
+
+public class GuessNumber implements Serializable {
 
     private int numberId;
     private int guessNumber;
