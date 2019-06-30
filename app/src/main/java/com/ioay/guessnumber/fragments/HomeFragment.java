@@ -28,8 +28,9 @@ public class HomeFragment extends Fragment {
     private Button buttonTry;
     private ImageView arrowUp, arrowDown, trophy;
     private EditText editTextGuess;
-    private TextView textViewMessage;
+    private TextView textViewMessage,textViewGuess;
     private int guessNumber;
+    private int counter = 5;
 
     @Override
     public void onAttach(Context context) {
@@ -58,36 +59,49 @@ public class HomeFragment extends Fragment {
         trophy = v.findViewById(R.id.trophy);
         textViewMessage = v.findViewById(R.id.textView_message);
         editTextGuess = v.findViewById(R.id.editText_guessInput);
+        textViewGuess = v.findViewById(R.id.textView_chance);
 
         buttonTry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editTextGuess.getText().equals("")) {
-                    try {
-                        int guess = Integer.valueOf(editTextGuess.getText().toString());
+                counter--;
 
-                        if (guess < guessNumber) {
-                            arrowDown.setVisibility(View.VISIBLE);
-                            arrowUp.setVisibility(View.INVISIBLE);
+                if(counter !=0){
+                    if (!editTextGuess.getText().equals("")) {
+                        try {
+                            int guess = Integer.valueOf(editTextGuess.getText().toString());
+
+                            if (guess < guessNumber) {
+                                arrowDown.setVisibility(View.VISIBLE);
+                                arrowUp.setVisibility(View.INVISIBLE);
+                                editTextGuess.setText("");
+                            }
+                            if (guess > guessNumber) {
+                                arrowDown.setVisibility(View.INVISIBLE);
+                                arrowUp.setVisibility(View.VISIBLE);
+                                editTextGuess.setText("");
+                            }
+                            if (guess == guessNumber) {
+                                arrowDown.setVisibility(View.INVISIBLE);
+                                arrowUp.setVisibility(View.INVISIBLE);
+                                trophy.setVisibility(View.VISIBLE);
+                                textViewMessage.setText("Congratulations !");
+                                textViewMessage.setTextColor(getResources().getColor(R.color.white));
+                                editTextGuess.setFocusable(false);
+                            }
+                        } catch (Exception e) {
+                            Log.e("Error Home Fragment", e.getMessage());
                         }
-                        if (guess > guessNumber) {
-                            arrowDown.setVisibility(View.INVISIBLE);
-                            arrowUp.setVisibility(View.VISIBLE);
-                        }
-                        if (guess == guessNumber) {
-                            arrowDown.setVisibility(View.INVISIBLE);
-                            arrowUp.setVisibility(View.INVISIBLE);
-                            trophy.setVisibility(View.VISIBLE);
-                            textViewMessage.setText("Congratulations !");
-                            textViewMessage.setTextColor(getResources().getColor(R.color.white));
-                            editTextGuess.setFocusable(false);
-                        }
-                    } catch (Exception e) {
-                        Log.e("Error Home Fragment", e.getMessage());
+                        textViewGuess.setText(" "+counter);
+                    } else {
+                        Toast.makeText(getContext(), "Please Enter Your Guess !", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getContext(), "Please Enter Your Guess !", Toast.LENGTH_SHORT).show();
+                }if(counter == 0){
+                   editTextGuess.setFocusable(false);
+                   buttonTry.setClickable(false);
+                    Toast.makeText(getContext(), "Sorry, Game Over :(", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
