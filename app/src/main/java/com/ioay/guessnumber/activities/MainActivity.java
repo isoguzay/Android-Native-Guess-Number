@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             default:
                                 temp = random.nextInt(5);
-                                guessNumber.setGuessNumber(temp);
+                                  guessNumber.setGuessNumber(temp);
                         }
 
                         Intent intent = new Intent(MainActivity.this, GameActivity.class);
