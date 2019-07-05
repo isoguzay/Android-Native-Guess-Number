@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.ioay.guessnumber.R;
 import com.ioay.guessnumber.model.GuessNumber;
 
@@ -20,15 +22,15 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
-    Bundle bundle = new Bundle();
-    private Button buttonTry;
+    private Button buttonTry,buttonNew;
     private ImageView arrowUp, arrowDown, trophy;
     private EditText editTextGuess;
-    private TextView textViewMessage,textViewGuess;
-    private int guessNumber,temp;
-    GuessNumber  guess = new GuessNumber();
+    private TextView textViewMessage, textViewGuess;
+    private RatingBar ratingBar;
+    private int temp;
+    GuessNumber guess = new GuessNumber();
     Random random = new Random();
-    private int counter=5;
+    private int counter = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +40,15 @@ public class GameActivity extends AppCompatActivity {
 
         Bundle getDataBundle = getIntent().getExtras();
         if (getDataBundle != null) {
-            guessNumber = Integer.valueOf(getDataBundle.getString("data"));
+            guess.setGuessNumber(Integer.valueOf(getDataBundle.getString("data")));
         }
 
         GuessNumber gNumber = (GuessNumber) getIntent().getSerializableExtra("numberObject");
 
-        if (String.valueOf(guessNumber)!= null) {
-            Log.e("Game ... ", String.valueOf(guessNumber));
+        if (String.valueOf(guess.getGuessNumber()) != null) {
+            Log.e("Game ... ", String.valueOf(guess.getGuessNumber()));
         }
-            Log.e("object ", gNumber.toString());
+        Log.e("object ", gNumber.toString());
 
         buttonTry = findViewById(R.id.button_try);
         arrowUp = findViewById(R.id.arrowup);
@@ -55,29 +57,31 @@ public class GameActivity extends AppCompatActivity {
         textViewMessage = findViewById(R.id.textView_message);
         editTextGuess = findViewById(R.id.editText_guessInput);
         textViewGuess = findViewById(R.id.textView_chance);
+        ratingBar = findViewById(R.id.ratingBar);
+        buttonNew = findViewById(R.id.button_new);
 
-        if (buttonTry.getText().equals("Try It")){
-            buttonTry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        buttonTry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (buttonTry.getText().equals("Try It")) {
                     counter--;
 
-                    if(counter !=0){
+                    if (counter != 0) {
                         if (!editTextGuess.getText().equals("")) {
                             try {
-                                int guess = Integer.valueOf(editTextGuess.getText().toString());
+                                int guessNum = Integer.valueOf(editTextGuess.getText().toString());
 
-                                if (guess < guessNumber) {
+                                if (guessNum < guess.getGuessNumber() ) {
                                     arrowDown.setVisibility(View.VISIBLE);
                                     arrowUp.setVisibility(View.INVISIBLE);
                                     editTextGuess.setText("");
                                 }
-                                if (guess > guessNumber) {
+                                if (guessNum > guess.getGuessNumber()) {
                                     arrowDown.setVisibility(View.INVISIBLE);
                                     arrowUp.setVisibility(View.VISIBLE);
                                     editTextGuess.setText("");
                                 }
-                                if (guess == guessNumber) {
+                                if (guessNum == guess.getGuessNumber()) {
                                     arrowDown.setVisibility(View.INVISIBLE);
                                     arrowUp.setVisibility(View.INVISIBLE);
                                     trophy.setVisibility(View.VISIBLE);
@@ -85,31 +89,37 @@ public class GameActivity extends AppCompatActivity {
                                     textViewMessage.setTextColor(getResources().getColor(R.color.white));
                                     editTextGuess.setFocusable(false);
                                     buttonTry.setClickable(false);
-                                    buttonTry.setText("Game Over");
+                                    buttonTry.setText("You are WIN !");
+                                    ratingBar.setVisibility(View.VISIBLE);
+                                    ratingBar.setRating(counter+1);
                                 }
                             } catch (Exception e) {
                                 Log.e("Error Home Fragment", e.getMessage());
                             }
-                            textViewGuess.setText(" "+counter);
+                            textViewGuess.setText(" " + counter);
                         } else {
                             Toast.makeText(GameActivity.this, "Please Enter Your Guess !", Toast.LENGTH_SHORT).show();
                         }
-                    }if(counter == 0){
-                        textViewGuess.setText(" "+counter);
+                    }
+                    if (counter == 0) {
+                        textViewGuess.setText(" " + counter);
                         editTextGuess.setFocusable(false);
                         buttonTry.setClickable(false);
                         Toast.makeText(GameActivity.this, "Sorry, Game Over :(", Toast.LENGTH_SHORT).show();
                         buttonTry.setText("New Game");
+                        buttonNew.setVisibility(View.VISIBLE);
                     }
                 }
-            });
-        }
+            }
+        });
 
 
-        if (buttonTry.getText().equals("New Game")){
-            buttonTry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        buttonNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (buttonTry.getText().equals("New Game")) {
+
                     final String[] range = {"0..9", "0..25", "0..50", "0..100"};
                     final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                     builder.setTitle("Select Your Number Range !");
@@ -117,7 +127,7 @@ public class GameActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
                             guess.setNumberRange(range[i]);
-
+                            Log.e("New Range", String.valueOf(range[i]));
                             switch (guess.getNumberRange()) {
                                 case "0..9":
                                     temp = random.nextInt(9);
@@ -139,18 +149,22 @@ public class GameActivity extends AppCompatActivity {
                                     temp = random.nextInt(5);
                                     guess.setGuessNumber(temp);
                             }
+                            Log.e("New game", String.valueOf(guess.getGuessNumber()));
                         }
                     });
                     builder.show();
+                    buttonTry.setClickable(true);
+                    buttonTry.setText("Try It");
+                    counter = 5;
+                    editTextGuess.setClickable(true);
+                    editTextGuess.setText("");
+                    arrowUp.setVisibility(View.INVISIBLE);
+                    arrowDown.setVisibility(View.INVISIBLE);
                 }
-
-            });
-            buttonTry.setText("Try It");
-        }
-
+            }
+        });
 
 
     }
-
 }
 
