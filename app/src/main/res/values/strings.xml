@@ -6,6 +6,7 @@
     <string name="result">Result : </string>
     <string name="buttonGuess">Try It</string>
     <string name="buttonPlay">Lets Play</string>
+    <string name="buttonNew">New Game</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="title_home">Home</string>
     <string name="title_settings">Settings</string>

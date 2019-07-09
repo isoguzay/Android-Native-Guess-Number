@@ -1,5 +1,6 @@
 package com.ioay.guessnumber.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,10 +24,10 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
-    private Button buttonTry,buttonNew;
+    private Button buttonTry, buttonNew;
     private ImageView arrowUp, arrowDown, trophy;
     private EditText editTextGuess;
-    private TextView textViewMessage, textViewGuess;
+    private TextView textViewMessage, textViewGuess, textViewLeft;
     private RatingBar ratingBar;
     private int temp;
     GuessNumber guess = new GuessNumber();
@@ -55,23 +57,25 @@ public class GameActivity extends AppCompatActivity {
         arrowDown = findViewById(R.id.arrowdown);
         trophy = findViewById(R.id.trophy);
         textViewMessage = findViewById(R.id.textView_message);
+        textViewLeft = findViewById(R.id.textView_leftRight);
         editTextGuess = findViewById(R.id.editText_guessInput);
         textViewGuess = findViewById(R.id.textView_chance);
         ratingBar = findViewById(R.id.ratingBar);
         buttonNew = findViewById(R.id.button_new);
+
+        final InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         buttonTry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (buttonTry.getText().equals("Try It")) {
                     counter--;
-
                     if (counter != 0) {
                         if (!editTextGuess.getText().equals("")) {
                             try {
                                 int guessNum = Integer.valueOf(editTextGuess.getText().toString());
 
-                                if (guessNum < guess.getGuessNumber() ) {
+                                if (guessNum < guess.getGuessNumber()) {
                                     arrowDown.setVisibility(View.VISIBLE);
                                     arrowUp.setVisibility(View.INVISIBLE);
                                     editTextGuess.setText("");
@@ -87,11 +91,12 @@ public class GameActivity extends AppCompatActivity {
                                     trophy.setVisibility(View.VISIBLE);
                                     textViewMessage.setText("Congratulations !");
                                     textViewMessage.setTextColor(getResources().getColor(R.color.white));
-                                    editTextGuess.setFocusable(false);
-                                    buttonTry.setClickable(false);
-                                    buttonTry.setText("You are WIN !");
+                                    buttonTry.setText("You are Win !");
                                     ratingBar.setVisibility(View.VISIBLE);
-                                    ratingBar.setRating(counter+1);
+                                    ratingBar.setRating(counter + 1);
+                                    buttonNew.setVisibility(View.VISIBLE);
+                                    textViewLeft.setVisibility(View.INVISIBLE);
+                                    textViewGuess.setVisibility(View.INVISIBLE);
                                 }
                             } catch (Exception e) {
                                 Log.e("Error Home Fragment", e.getMessage());
@@ -103,11 +108,13 @@ public class GameActivity extends AppCompatActivity {
                     }
                     if (counter == 0) {
                         textViewGuess.setText(" " + counter);
-                        editTextGuess.setFocusable(false);
                         buttonTry.setClickable(false);
                         Toast.makeText(GameActivity.this, "Sorry, Game Over :(", Toast.LENGTH_SHORT).show();
-                        buttonTry.setText("New Game");
+                        buttonTry.setText("Game Over");
                         buttonNew.setVisibility(View.VISIBLE);
+                        textViewLeft.setVisibility(View.INVISIBLE);
+                        textViewGuess.setVisibility(View.INVISIBLE);
+
                     }
                 }
             }
@@ -117,9 +124,7 @@ public class GameActivity extends AppCompatActivity {
         buttonNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (buttonTry.getText().equals("New Game")) {
-
+                if (buttonTry.getText().equals("Game Over") || buttonTry.getText().equals("You are Win !")) {
                     final String[] range = {"0..9", "0..25", "0..50", "0..100"};
                     final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                     builder.setTitle("Select Your Number Range !");
@@ -155,16 +160,22 @@ public class GameActivity extends AppCompatActivity {
                     builder.show();
                     buttonTry.setClickable(true);
                     buttonTry.setText("Try It");
-                    counter = 5;
-                    editTextGuess.setClickable(true);
                     editTextGuess.setText("");
+                    buttonNew.setVisibility(View.INVISIBLE);
                     arrowUp.setVisibility(View.INVISIBLE);
                     arrowDown.setVisibility(View.INVISIBLE);
+                    textViewLeft.setVisibility(View.VISIBLE);
+                    textViewGuess.setVisibility(View.VISIBLE);
+                    counter = 5;
+                    textViewGuess.setText("5");
+                    trophy.setVisibility(View.INVISIBLE);
+                    ratingBar.setVisibility(View.INVISIBLE);
+                    textViewMessage.setText(R.string.game_info);
+                    textViewMessage.setTextColor(getResources().getColor(R.color.pomegranate));
                 }
             }
         });
-
-
     }
+
 }
 
