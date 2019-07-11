@@ -38,7 +38,7 @@
             android:layout_width="172dp"
             android:layout_height="129dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
@@ -49,9 +49,9 @@
             android:textSize="64sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trophy"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
@@ -70,8 +70,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.625" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_guessInput"
+            app:layout_constraintVertical_bias="0.166" />
 
         <ImageView
             android:id="@+id/arrowup"
@@ -83,12 +83,11 @@
             android:layout_marginBottom="8dp"
             android:src="@drawable/arrowdown"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/button_try"
+            app:layout_constraintEnd_toStartOf="@+id/editText_guessInput"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.328" />
+            app:layout_constraintVertical_bias="0.806" />
 
         <ImageView
             android:id="@+id/arrowdown"
@@ -100,12 +99,12 @@
             android:layout_marginBottom="8dp"
             android:src="@drawable/arrowup"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/button_try"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/arrowup"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toEndOf="@+id/editText_guessInput"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.33" />
+            app:layout_constraintVertical_bias="0.806" />
 
         <ImageView
             android:id="@+id/trophy"
@@ -120,10 +119,10 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.171" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_message"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView_leftRight"
@@ -139,29 +138,29 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.166"
+            app:layout_constraintHorizontal_bias="0.175"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.79" />
+            app:layout_constraintTop_toBottomOf="@+id/button_try"
+            app:layout_constraintVertical_bias="0.166" />
 
         <TextView
             android:id="@+id/textView_chance"
             android:layout_width="47dp"
             android:layout_height="73dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="72dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="5"
             android:textAlignment="center"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.977"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.87" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView_leftRight"
+            app:layout_constraintTop_toTopOf="@+id/button_new"
+            app:layout_constraintVertical_bias="0.107" />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -181,25 +180,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.914" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_leftRight"
+            app:layout_constraintVertical_bias="0.312" />
 
         <Button
             android:id="@+id/button_new"
             android:layout_width="225dp"
             android:layout_height="80dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="548dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@color/pumpkin"
             android:text="@string/buttonNew"
             android:textAllCaps="false"
             android:textColor="@color/clouds"
             android:textSize="30sp"
             android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_leftRight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/button_try"
+            app:layout_constraintVertical_bias="1.0" />
 
     </android.support.constraint.ConstraintLayout>
 
