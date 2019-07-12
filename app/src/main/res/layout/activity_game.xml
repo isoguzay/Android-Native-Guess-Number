@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.075" />
+            app:layout_constraintVertical_bias="0.043" />
 
         <EditText
             android:id="@+id/editText_guessInput"
@@ -126,27 +126,24 @@
 
         <TextView
             android:id="@+id/textView_leftRight"
-            android:layout_width="338dp"
-            android:layout_height="73dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="Your remaning guess chance : "
+            android:text="Remaining Guess Chance :"
             android:textAlignment="center"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.175"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView_message"
             app:layout_constraintTop_toBottomOf="@+id/button_try"
-            app:layout_constraintVertical_bias="0.166" />
+            app:layout_constraintVertical_bias="0.155" />
 
         <TextView
             android:id="@+id/textView_chance"
             android:layout_width="47dp"
-            android:layout_height="73dp"
+            android:layout_height="76dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
@@ -157,10 +154,10 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView_leftRight"
             app:layout_constraintTop_toTopOf="@+id/button_new"
-            app:layout_constraintVertical_bias="0.107" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <RatingBar
             android:id="@+id/ratingBar"
