@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GuessNumber</string>
+    <string name="app_name">Guess Number</string>
     <string name="app_welcome">Guess a Number</string>
     <string name="question"> ? </string>
     <string name="game_info">Guess a Number </string>
