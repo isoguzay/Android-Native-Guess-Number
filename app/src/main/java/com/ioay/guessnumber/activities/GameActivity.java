@@ -53,8 +53,8 @@ public class GameActivity extends AppCompatActivity {
         Log.e("object ", gNumber.toString());
 
         buttonTry = findViewById(R.id.button_try);
-        arrowUp = findViewById(R.id.arrowup);
-        arrowDown = findViewById(R.id.arrowdown);
+        arrowUp = findViewById(R.id.arrow_up);
+        arrowDown = findViewById(R.id.arrow_down);
         trophy = findViewById(R.id.trophy);
         textViewMessage = findViewById(R.id.textView_message);
         textViewLeft = findViewById(R.id.textView_leftRight);
