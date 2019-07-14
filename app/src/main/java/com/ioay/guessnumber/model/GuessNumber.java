@@ -7,14 +7,18 @@ public class GuessNumber implements Serializable {
     private int numberId;
     private int guessNumber;
     private String numberRange;
+    private int counter;
+    private int ratioLevel;
 
-    public GuessNumber() {
-    }
-
-    public GuessNumber(int numberId, int guessNumber, String numberRange) {
+    public GuessNumber(int numberId, int guessNumber, String numberRange, int counter, int ratioLevel) {
         this.numberId = numberId;
         this.guessNumber = guessNumber;
         this.numberRange = numberRange;
+        this.counter = counter;
+        this.ratioLevel = ratioLevel;
+    }
+
+    public GuessNumber() {
     }
 
     public int getNumberId() {
@@ -41,12 +45,30 @@ public class GuessNumber implements Serializable {
         this.numberRange = numberRange;
     }
 
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public int getRatioLevel() {
+        return ratioLevel;
+    }
+
+    public void setRatioLevel(int ratioLevel) {
+        this.ratioLevel = ratioLevel;
+    }
+
     @Override
     public String toString() {
         return "GuessNumber{" +
                 "numberId=" + numberId +
                 ", guessNumber=" + guessNumber +
                 ", numberRange='" + numberRange + '\'' +
+                ", counter=" + counter +
+                ", ratioLevel=" + ratioLevel +
                 '}';
     }
 }

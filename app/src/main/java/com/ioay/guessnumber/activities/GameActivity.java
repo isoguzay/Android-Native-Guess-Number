@@ -32,13 +32,12 @@ public class GameActivity extends AppCompatActivity {
     private int temp;
     GuessNumber guess = new GuessNumber();
     Random random = new Random();
-    private int counter = 5;
+    private int counter,ratioLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-        mTextMessage = findViewById(R.id.textView_message);
+        initalizeComponents();
 
         Bundle getDataBundle = getIntent().getExtras();
         if (getDataBundle != null) {
@@ -46,22 +45,16 @@ public class GameActivity extends AppCompatActivity {
         }
 
         GuessNumber gNumber = (GuessNumber) getIntent().getSerializableExtra("numberObject");
+        counter = gNumber.getCounter();
+        ratioLevel = gNumber.getRatioLevel();
 
         if (String.valueOf(guess.getGuessNumber()) != null) {
             Log.e("Game ... ", String.valueOf(guess.getGuessNumber()));
         }
         Log.e("object ", gNumber.toString());
+        Log.e("counter ", String.valueOf(counter));
 
-        buttonTry = findViewById(R.id.button_try);
-        arrowUp = findViewById(R.id.arrow_up);
-        arrowDown = findViewById(R.id.arrow_down);
-        trophy = findViewById(R.id.trophy);
-        textViewMessage = findViewById(R.id.textView_message);
-        textViewLeft = findViewById(R.id.textView_leftRight);
-        editTextGuess = findViewById(R.id.editText_guessInput);
-        textViewGuess = findViewById(R.id.textView_chance);
-        ratingBar = findViewById(R.id.ratingBar);
-        buttonNew = findViewById(R.id.button_new);
+        textViewGuess.setText(String.valueOf(counter));
 
         final InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -70,33 +63,19 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (buttonTry.getText().equals("Try It")) {
                     counter--;
-                    if (counter != 0) {
+                    if (!(counter < 0)) {
                         if (!editTextGuess.getText().equals("")) {
                             try {
                                 int guessNum = Integer.valueOf(editTextGuess.getText().toString());
 
                                 if (guessNum < guess.getGuessNumber()) {
-                                    arrowDown.setVisibility(View.VISIBLE);
-                                    arrowUp.setVisibility(View.INVISIBLE);
-                                    editTextGuess.setText("");
+                                    setValuesIncrease();
                                 }
                                 if (guessNum > guess.getGuessNumber()) {
-                                    arrowDown.setVisibility(View.INVISIBLE);
-                                    arrowUp.setVisibility(View.VISIBLE);
-                                    editTextGuess.setText("");
+                                    setValuesDecrease();
                                 }
                                 if (guessNum == guess.getGuessNumber()) {
-                                    arrowDown.setVisibility(View.INVISIBLE);
-                                    arrowUp.setVisibility(View.INVISIBLE);
-                                    trophy.setVisibility(View.VISIBLE);
-                                    textViewMessage.setText("Congratulations !");
-                                    textViewMessage.setTextColor(getResources().getColor(R.color.white));
-                                    buttonTry.setText("You are Win !");
-                                    ratingBar.setVisibility(View.VISIBLE);
-                                    ratingBar.setRating(counter + 1);
-                                    buttonNew.setVisibility(View.VISIBLE);
-                                    textViewLeft.setVisibility(View.INVISIBLE);
-                                    textViewGuess.setVisibility(View.INVISIBLE);
+                                   setValuesWin();
                                 }
                             } catch (Exception e) {
                                 Log.e("Error Home Fragment", e.getMessage());
@@ -106,20 +85,12 @@ public class GameActivity extends AppCompatActivity {
                             Toast.makeText(GameActivity.this, "Please Enter Your Guess !", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    if (counter == 0) {
-                        textViewGuess.setText(" " + counter);
-                        buttonTry.setClickable(false);
-                        Toast.makeText(GameActivity.this, "Sorry, Game Over :(", Toast.LENGTH_SHORT).show();
-                        buttonTry.setText("Game Over");
-                        buttonNew.setVisibility(View.VISIBLE);
-                        textViewLeft.setVisibility(View.INVISIBLE);
-                        textViewGuess.setVisibility(View.INVISIBLE);
-
+                    if (counter <= 0 && !textViewMessage.getText().equals("Congratulations !")) {
+                        setValuesGameOver();
                     }
                 }
             }
         });
-
 
         buttonNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,18 +108,26 @@ public class GameActivity extends AppCompatActivity {
                                 case "0..9":
                                     temp = random.nextInt(9);
                                     guess.setGuessNumber(temp);
+                                    counter=5;
+                                    textViewGuess.setText(String.valueOf(5));
                                     break;
                                 case "0..25":
                                     temp = random.nextInt(25);
                                     guess.setGuessNumber(temp);
+                                    counter=10;
+                                    textViewGuess.setText(String.valueOf(10));
                                     break;
                                 case "0..50":
                                     temp = random.nextInt(50);
                                     guess.setGuessNumber(temp);
+                                    counter=15;
+                                    textViewGuess.setText(String.valueOf(15));
                                     break;
                                 case "0..100":
                                     temp = random.nextInt(100);
                                     guess.setGuessNumber(temp);
+                                    counter=20;
+                                    textViewGuess.setText(String.valueOf(20));
                                     break;
                                 default:
                                     temp = random.nextInt(5);
@@ -158,24 +137,117 @@ public class GameActivity extends AppCompatActivity {
                         }
                     });
                     builder.show();
-                    buttonTry.setClickable(true);
-                    buttonTry.setText("Try It");
-                    editTextGuess.setText("");
-                    buttonNew.setVisibility(View.INVISIBLE);
-                    arrowUp.setVisibility(View.INVISIBLE);
-                    arrowDown.setVisibility(View.INVISIBLE);
-                    textViewLeft.setVisibility(View.VISIBLE);
-                    textViewGuess.setVisibility(View.VISIBLE);
-                    counter = 5;
-                    textViewGuess.setText("5");
-                    trophy.setVisibility(View.INVISIBLE);
-                    ratingBar.setVisibility(View.INVISIBLE);
-                    textViewMessage.setText(R.string.game_info);
-                    textViewMessage.setTextColor(getResources().getColor(R.color.pomegranate));
+                    setValuesNewGame();
                 }
             }
         });
     }
 
+    public void setValuesGameOver(){
+        textViewGuess.setText(" " + counter);
+        buttonTry.setClickable(false);
+        buttonTry.setText("Game Over");
+        textViewMessage.setText("The Number is " + guess.getGuessNumber());
+        trophy.setImageResource(R.drawable.lose);
+        trophy.setVisibility(View.VISIBLE);
+        buttonNew.setVisibility(View.VISIBLE);
+        textViewLeft.setVisibility(View.INVISIBLE);
+        textViewGuess.setVisibility(View.INVISIBLE);
+    }
+
+    public void setValuesDecrease(){
+        arrowDown.setVisibility(View.VISIBLE);
+        arrowUp.setVisibility(View.INVISIBLE);
+        editTextGuess.setText("");
+    }
+
+    public void setValuesIncrease(){
+        arrowDown.setVisibility(View.INVISIBLE);
+        arrowUp.setVisibility(View.VISIBLE);
+        editTextGuess.setText("");
+    }
+
+    public void setValuesWin(){
+        arrowDown.setVisibility(View.INVISIBLE);
+        arrowUp.setVisibility(View.INVISIBLE);
+        trophy.setImageResource(R.drawable.trophy);
+        trophy.setVisibility(View.VISIBLE);
+        textViewMessage.setText("Congratulations !");
+        textViewMessage.setTextColor(getResources().getColor(R.color.white));
+        buttonTry.setText("You are Win !");
+        ratingBar.setVisibility(View.VISIBLE);
+        setRatioBarLevel(ratioLevel);
+        //ratingBar.setRating((counter) + 1);
+        buttonNew.setVisibility(View.VISIBLE);
+        textViewLeft.setVisibility(View.INVISIBLE);
+        textViewGuess.setVisibility(View.INVISIBLE);
+    }
+
+    public void setValuesNewGame(){
+        buttonTry.setClickable(true);
+        buttonTry.setText("Try It");
+        editTextGuess.setText("");
+        buttonNew.setVisibility(View.INVISIBLE);
+        arrowUp.setVisibility(View.INVISIBLE);
+        arrowDown.setVisibility(View.INVISIBLE);
+        textViewLeft.setVisibility(View.VISIBLE);
+        textViewGuess.setVisibility(View.VISIBLE);
+        trophy.setVisibility(View.INVISIBLE);
+        ratingBar.setVisibility(View.INVISIBLE);
+        textViewMessage.setText(R.string.game_info);
+        textViewMessage.setTextColor(getResources().getColor(R.color.pomegranate));
+    }
+
+    public void initalizeComponents(){
+        setContentView(R.layout.activity_game);
+        mTextMessage = findViewById(R.id.textView_message);
+        buttonTry = findViewById(R.id.button_try);
+        arrowUp = findViewById(R.id.arrow_up);
+        arrowDown = findViewById(R.id.arrow_down);
+        trophy = findViewById(R.id.trophy);
+        textViewMessage = findViewById(R.id.textView_message);
+        textViewLeft = findViewById(R.id.textView_leftRight);
+        editTextGuess = findViewById(R.id.editText_guessInput);
+        textViewGuess = findViewById(R.id.textView_chance);
+        ratingBar = findViewById(R.id.ratingBar);
+        buttonNew = findViewById(R.id.button_new);
+    }
+
+    public void setRatioBarLevel(int _ratioLevel){
+        if (_ratioLevel == 1){
+            if (counter==5){
+                ratingBar.setRating(5);
+            }
+            if (counter == 4){
+                ratingBar.setRating(4);
+            }
+            if (counter == 3){
+                ratingBar.setRating(3);
+            }
+            if (counter == 2){
+                ratingBar.setRating(2);
+            }
+            if (counter == 1){
+                ratingBar.setRating(1);
+            }
+        }
+        if (_ratioLevel == 2){
+            if (counter==10){
+                ratingBar.setRating(5);
+            }
+            if (counter>=7 && counter<10){
+                ratingBar.setRating(4);
+            }
+            if (counter>=4 && counter<7){
+                ratingBar.setRating(3);
+            }
+            if (counter>=2 && counter<4){
+                ratingBar.setRating(2);
+            }
+            if (counter==0 && counter<2){
+                ratingBar.setRating(1);
+            }
+        }
+    }
 }
 
