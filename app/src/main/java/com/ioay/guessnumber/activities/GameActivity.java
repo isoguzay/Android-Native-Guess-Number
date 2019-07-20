@@ -32,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
     private int temp;
     GuessNumber guess = new GuessNumber();
     Random random = new Random();
-    private int counter,ratioLevel;
+    private int counter, ratioLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
                                     setValuesDecrease();
                                 }
                                 if (guessNum == guess.getGuessNumber()) {
-                                   setValuesWin();
+                                    setValuesWin();
                                 }
                             } catch (Exception e) {
                                 Log.e("Error Home Fragment", e.getMessage());
@@ -108,26 +108,30 @@ public class GameActivity extends AppCompatActivity {
                                 case "0..9":
                                     temp = random.nextInt(9);
                                     guess.setGuessNumber(temp);
-                                    counter=5;
+                                    counter = 5;
                                     textViewGuess.setText(String.valueOf(5));
+                                    ratioLevel=1;
                                     break;
                                 case "0..25":
                                     temp = random.nextInt(25);
                                     guess.setGuessNumber(temp);
-                                    counter=10;
-                                    textViewGuess.setText(String.valueOf(10));
+                                    counter = 8;
+                                    textViewGuess.setText(String.valueOf(8));
+                                    ratioLevel=2;
                                     break;
                                 case "0..50":
                                     temp = random.nextInt(50);
                                     guess.setGuessNumber(temp);
-                                    counter=15;
-                                    textViewGuess.setText(String.valueOf(15));
+                                    counter = 10;
+                                    textViewGuess.setText(String.valueOf(10));
+                                    ratioLevel=3;
                                     break;
                                 case "0..100":
                                     temp = random.nextInt(100);
                                     guess.setGuessNumber(temp);
-                                    counter=20;
-                                    textViewGuess.setText(String.valueOf(20));
+                                    counter = 12;
+                                    textViewGuess.setText(String.valueOf(12));
+                                    ratioLevel=4;
                                     break;
                                 default:
                                     temp = random.nextInt(5);
@@ -143,7 +147,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    public void setValuesGameOver(){
+    public void setValuesGameOver() {
         textViewGuess.setText(" " + counter);
         buttonTry.setClickable(false);
         buttonTry.setText("Game Over");
@@ -155,19 +159,19 @@ public class GameActivity extends AppCompatActivity {
         textViewGuess.setVisibility(View.INVISIBLE);
     }
 
-    public void setValuesDecrease(){
+    public void setValuesDecrease() {
         arrowDown.setVisibility(View.VISIBLE);
         arrowUp.setVisibility(View.INVISIBLE);
         editTextGuess.setText("");
     }
 
-    public void setValuesIncrease(){
+    public void setValuesIncrease() {
         arrowDown.setVisibility(View.INVISIBLE);
         arrowUp.setVisibility(View.VISIBLE);
         editTextGuess.setText("");
     }
 
-    public void setValuesWin(){
+    public void setValuesWin() {
         arrowDown.setVisibility(View.INVISIBLE);
         arrowUp.setVisibility(View.INVISIBLE);
         trophy.setImageResource(R.drawable.trophy);
@@ -177,13 +181,12 @@ public class GameActivity extends AppCompatActivity {
         buttonTry.setText("You are Win !");
         ratingBar.setVisibility(View.VISIBLE);
         setRatioBarLevel(ratioLevel);
-        //ratingBar.setRating((counter) + 1);
         buttonNew.setVisibility(View.VISIBLE);
         textViewLeft.setVisibility(View.INVISIBLE);
         textViewGuess.setVisibility(View.INVISIBLE);
     }
 
-    public void setValuesNewGame(){
+    public void setValuesNewGame() {
         buttonTry.setClickable(true);
         buttonTry.setText("Try It");
         editTextGuess.setText("");
@@ -198,7 +201,7 @@ public class GameActivity extends AppCompatActivity {
         textViewMessage.setTextColor(getResources().getColor(R.color.pomegranate));
     }
 
-    public void initalizeComponents(){
+    public void initalizeComponents() {
         setContentView(R.layout.activity_game);
         mTextMessage = findViewById(R.id.textView_message);
         buttonTry = findViewById(R.id.button_try);
@@ -213,38 +216,72 @@ public class GameActivity extends AppCompatActivity {
         buttonNew = findViewById(R.id.button_new);
     }
 
-    public void setRatioBarLevel(int _ratioLevel){
-        if (_ratioLevel == 1){
-            if (counter==5){
+    public void setRatioBarLevel(int _ratioLevel) {
+        if (_ratioLevel == 1) {
+            if (counter == 4) {
                 ratingBar.setRating(5);
             }
-            if (counter == 4){
+            if (counter == 3) {
                 ratingBar.setRating(4);
             }
-            if (counter == 3){
+            if (counter == 2) {
                 ratingBar.setRating(3);
             }
-            if (counter == 2){
+            if (counter == 1) {
                 ratingBar.setRating(2);
             }
-            if (counter == 1){
+            if (counter == 0) {
                 ratingBar.setRating(1);
             }
         }
-        if (_ratioLevel == 2){
-            if (counter==10){
+        if (_ratioLevel == 2) {
+            if (counter == 7) {
                 ratingBar.setRating(5);
             }
-            if (counter>=7 && counter<10){
+            if (counter >= 5 && counter <= 6) {
                 ratingBar.setRating(4);
             }
-            if (counter>=4 && counter<7){
+            if (counter >= 3 && counter <= 4) {
                 ratingBar.setRating(3);
             }
-            if (counter>=2 && counter<4){
+            if (counter >= 1 && counter <= 2) {
                 ratingBar.setRating(2);
             }
-            if (counter==0 && counter<2){
+            if (counter == 0) {
+                ratingBar.setRating(1);
+            }
+        }
+        if (_ratioLevel == 3) {
+            if (counter == 9) {
+                ratingBar.setRating(5);
+            }
+            if (counter >= 7 && counter <= 8) {
+                ratingBar.setRating(4);
+            }
+            if (counter >= 4 && counter <= 6) {
+                ratingBar.setRating(3);
+            }
+            if (counter >= 1 && counter <= 3) {
+                ratingBar.setRating(2);
+            }
+            if (counter == 0) {
+                ratingBar.setRating(1);
+            }
+        }
+        if (_ratioLevel == 4) {
+            if (counter == 11) {
+                ratingBar.setRating(5);
+            }
+            if (counter >= 9 && counter <= 10) {
+                ratingBar.setRating(4);
+            }
+            if (counter >= 5 && counter <= 8) {
+                ratingBar.setRating(3);
+            }
+            if (counter >= 1 && counter <= 4) {
+                ratingBar.setRating(2);
+            }
+            if (counter == 0) {
                 ratingBar.setRating(1);
             }
         }

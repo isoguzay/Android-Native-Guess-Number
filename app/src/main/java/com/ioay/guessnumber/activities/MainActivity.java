@@ -48,19 +48,19 @@ public class MainActivity extends AppCompatActivity {
                             case "0..25":
                                 temp = random.nextInt(25);
                                 guessNumber.setGuessNumber(temp);
-                                guessNumber.setCounter(10);
+                                guessNumber.setCounter(8);
                                 guessNumber.setRatioLevel(2);
                                 break;
                             case "0..50":
                                 temp = random.nextInt(50);
                                 guessNumber.setGuessNumber(temp);
-                                guessNumber.setCounter(15);
+                                guessNumber.setCounter(10);
                                 guessNumber.setRatioLevel(3);
                                 break;
                             case "0..100":
                                 temp = random.nextInt(100);
                                 guessNumber.setGuessNumber(temp);
-                                guessNumber.setCounter(20);
+                                guessNumber.setCounter(12);
                                 guessNumber.setRatioLevel(4);
                                 break;
                             default:
