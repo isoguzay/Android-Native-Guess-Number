@@ -37,7 +37,9 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initalizeComponents();
+        setContentView(R.layout.activity_game);
+
+        initializeComponents();
 
         Bundle getDataBundle = getIntent().getExtras();
         if (getDataBundle != null) {
@@ -95,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
         buttonNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (buttonTry.getText().equals("Game Over") || buttonTry.getText().equals("You are Win !")) {
+                if (buttonTry.getText().equals("Game Over") || buttonTry.getText().equals("You Win !")) {
                     final String[] range = {"0..9", "0..25", "0..50", "0..100"};
                     final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                     builder.setTitle("Select Your Number Range !");
@@ -178,7 +180,7 @@ public class GameActivity extends AppCompatActivity {
         trophy.setVisibility(View.VISIBLE);
         textViewMessage.setText("Congratulations !");
         textViewMessage.setTextColor(getResources().getColor(R.color.white));
-        buttonTry.setText("You are Win !");
+        buttonTry.setText("You Win !");
         ratingBar.setVisibility(View.VISIBLE);
         setRatioBarLevel(ratioLevel);
         buttonNew.setVisibility(View.VISIBLE);
@@ -201,8 +203,7 @@ public class GameActivity extends AppCompatActivity {
         textViewMessage.setTextColor(getResources().getColor(R.color.pomegranate));
     }
 
-    public void initalizeComponents() {
-        setContentView(R.layout.activity_game);
+    public void initializeComponents() {
         mTextMessage = findViewById(R.id.textView_message);
         buttonTry = findViewById(R.id.button_try);
         arrowUp = findViewById(R.id.arrow_up);
